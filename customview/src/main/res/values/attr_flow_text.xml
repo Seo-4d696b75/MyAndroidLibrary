@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FlowTextView">
+        <attr name="text" format="string"/>
+        <attr name="text_size" format="dimension"/>
+        <attr name="text_color" format="color"/>
+        <attr name="flow_repeat" format="boolean"/>
+        <attr name="flow_speed" format="dimension"/>
+        <attr name="flow_interval" format="integer"/>
+        <attr name="flow_style">
+            <enum name="over" value="0"/>
+            <enum name="turn" value="1"/>
+        </attr>
+        <attr name="fading_width" format="dimension"/>
+        <attr name="back_color" format="color"/>
+        <attr name="fading_color" format="color"/>
+    </declare-styleable>
+</resources>

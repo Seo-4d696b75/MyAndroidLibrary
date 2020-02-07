@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ProgressBar">
+        <attr name="android:progressDrawable" />
+        <attr name="android:minWidth" />
+        <attr name="android:maxWidth" />
+        <attr name="android:minHeight" />
+        <attr name="android:maxHeight" />
+        <attr name="android:max" />
+        <attr name="android:progress" />
+        <attr name="android:secondaryProgress" />
+        <attr name="android:indeterminateBehavior"/>
+        <attr name="android:indeterminateDrawable"/>
+        <attr name="android:indeterminateOnly"/>
+        <attr name="android:indeterminate"/>
+        <attr name="android:indeterminateDuration"/>
+
+    </declare-styleable>
+
+    <declare-styleable name="SeekBar">
+        <attr name="android:thumb"/>
+        <attr name="android:thumbOffset"/>
+        <attr name="android:thumbTintMode"/>
+    </declare-styleable>
+</resources>

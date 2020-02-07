@@ -1,0 +1,2 @@
+include ':app', ':customview', ':customdialog', ':multi_process'
+project(':customview').projectDir = new File(settingsDir, 'customview')

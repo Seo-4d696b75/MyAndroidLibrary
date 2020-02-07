@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MultipleStateButton">
+        <attr name="state_num" format="integer"/>
+        <attr name="state_entry" format="integer"/>
+        <attr name="back_state_one" format="reference"/>
+        <attr name="back_state_two" format="reference"/>
+        <attr name="back_state_three" format="reference"/>
+        <attr name="back_state_four" format="reference"/>
+        <attr name="back_state_five" format="reference"/>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MultiToggleButton">
+        <attr name="text_visible" format="boolean"/>
+        <attr name="text_one" format="string"/>
+        <attr name="text_two" format="string"/>
+        <attr name="text_three" format="string"/>
+        <attr name="text_four" format="string"/>
+        <attr name="text_five" format="string"/>
+    </declare-styleable>
+</resources>
