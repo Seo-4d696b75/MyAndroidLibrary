@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jp.ac.u_tokyo.t.seo.customdialog.DialogFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
+    custom:title="処理中">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <ProgressBar
+                android:layout_margin="10dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:max="100000"
+                style="?android:attr/progressBarStyleLarge"/>
+            <TextView
+                android:layout_margin="10dp"
+                android:id="@+id/textProgressMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="message"/>
+        </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="0"
+            style="?android:attr/progressBarStyleHorizontal"/>
+        <TextView
+            android:id="@+id/textProgressState"
+            android:paddingRight="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="progress message"/>
+    </LinearLayout>
+</jp.ac.u_tokyo.t.seo.customdialog.DialogFrameLayout>

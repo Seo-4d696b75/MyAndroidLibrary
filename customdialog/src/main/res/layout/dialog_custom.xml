@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_margin="6dp"
+              android:background="@drawable/custom_dialog_back"
+              android:orientation="vertical"
+              android:id="@+id/customDialogRoot" >
+    <LinearLayout
+        android:id="@+id/customDialogHeaderContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/textViewCustomDialogTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="18dp"
+            android:text="ダイアログ題名"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/custom_dialog_title_back"/>
+
+        <TextView
+            android:id="@+id/textViewCustomDialogMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:padding="10dp"
+            android:text="ダイアログのメインメッセージ"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/customDialogContentContainer"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:id="@+id/customDialogButtonRoot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp">
+
+        <RelativeLayout
+            android:id="@+id/customDialogNeutralButtonContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/buttonCustomDialogNeutral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Neutral"
+                android:background="@drawable/custom_dialog_button_back"
+                android:textColor="@color/colorWhite"
+                android:layout_margin="6dp"/>
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/customDialogPositiveButtonContainer"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/buttonCustomDialogPositive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_dialog_button_back"
+                android:text="Positive"
+                android:textColor="@color/colorWhite"
+                android:layout_margin="6dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/customDialogNegativeButtonContainer"
+            android:layout_toLeftOf="@id/customDialogPositiveButtonContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/buttonCustomDialogNegative"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Negative"
+                android:background="@drawable/custom_dialog_button_back"
+                android:textColor="@color/colorWhite"
+                android:layout_margin="6dp"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

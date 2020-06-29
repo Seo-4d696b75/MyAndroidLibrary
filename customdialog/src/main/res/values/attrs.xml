@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DialogFrameLayout">
+        <attr name="title" format="string"/>
+        <attr name="title_text_size" format="dimension"/>
+        <attr name="title_text_color" format="color"/>
+        <attr name="message" format="string"/>
+        <attr name="message_text_size" format="dimension"/>
+        <attr name="message_text_color" format="color"/>
+        <attr name="dialog_background" format="reference"/>
+        <attr name="header_background" format="reference"/>
+        <attr name="button_positive" format="string"/>
+        <attr name="button_neutral" format="string"/>
+        <attr name="button_negative" format="string"/>
+        <attr name="button_background" format="reference"/>
+        <attr name="button_text_size" format="dimension"/>
+        <attr name="button_text_color" format="color"/>
+        <attr name="cancelable_outside_touch" format="boolean"/>
+    </declare-styleable>
+</resources>

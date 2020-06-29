@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <jp.ac.u_tokyo.t.seo.customview.MultiToggleButton
+            android:id="@+id/toggle"
+            android:padding="10dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            custom:text_visible="true"
+            custom:state_num="3"/>
+
+        <jp.ac.u_tokyo.t.seo.customview.MultiToggleButton
+            android:id="@+id/toggle2"
+            android:padding="10dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            custom:text_visible="true"
+            custom:state_num="3"/>
+    </LinearLayout>
+
+    <jp.ac.u_tokyo.t.seo.customview.FlowTextSurfaceView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        custom:text="This is FlowTextView. This view can properly show a text whose length is over the width of view."
+        custom:flow_interval="500"
+        custom:flow_speed="30dp"
+        custom:text_size="16sp"
+        custom:flow_repeat="false"
+        custom:fading_width="10dp"
+        custom:fading_color="#000000"
+        custom:back_color="#EEEEEE"/>
+
+
+    <jp.ac.u_tokyo.t.seo.customview.FlowTextSurfaceView
+        android:id="@+id/flowText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        custom:text="このウェジェットはその幅を超える長さをもつ文字列をわかりやすく表示できます"
+        custom:flow_repeat="true"
+        custom:flow_speed="100px"
+        custom:flow_interval="800"
+        custom:flow_style="turn"
+        custom:text_size="24sp"
+        custom:text_color="@color/colorPrimaryDark"
+        custom:fading_width="20dp"
+        custom:fading_color="#00FFFFFF"
+        custom:back_color="#E0E0E0"/>
+
+</LinearLayout>

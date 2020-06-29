@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ToggleButton
+            android:id="@+id/toggle"
+            android:background="@drawable/toggle_back"
+            android:layout_width="60dp"
+            android:layout_height="60dp"/>
+        <jp.ac.u_tokyo.t.seo.customview.MultiToggleButton
+            android:id="@+id/multiToggle"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            custom:state_num="3"
+            custom:state_entry="0"
+            custom:text_visible="false"
+            custom:back_state_one="@drawable/non_repeat"
+            custom:back_state_two="@drawable/repeat"
+            custom:back_state_three="@drawable/repeat_one"/>
+
+    </LinearLayout>
+
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/textLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </ScrollView>
+
+</LinearLayout>

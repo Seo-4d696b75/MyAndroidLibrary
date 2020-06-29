@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center_horizontal"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/textNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="message"/>
+
+    <jp.ac.u_tokyo.t.seo.customview.CustomNumberPicker
+        android:id="@+id/numberPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:value="10"
+        custom:min="-20"
+        custom:step="5"
+        custom:max="100"/>
+
+</LinearLayout>
