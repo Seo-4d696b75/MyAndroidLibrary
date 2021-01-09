@@ -14,11 +14,14 @@ import java.util.*
 import kotlin.math.abs
 import kotlin.math.pow
 
+
 /**
+ * 負数まで拡張した整数全体を表示・選択できる[android.widget.NumberPicker]の拡張View
+ *
  * @author Seo-4d696b75
- * @version 2021/01/09.
+ * @version 1.0 on 2017/10/15
  */
-class CustomNumberPicker : NumberPicker {
+open class CustomNumberPicker : NumberPicker {
 
     constructor(context: Context) : this(context, null) {
     }
@@ -56,6 +59,20 @@ class CustomNumberPicker : NumberPicker {
     private var shiftPoint: Int
     private var shiftRate: Float = 1.0f
     private var currentSpeed: Float = 0.0f
+
+    private var listener: OnValueChangeListener? = null
+
+    override fun setOnValueChangedListener(listener: OnValueChangeListener?) {
+        if ( listener == null ){
+            this.listener = null
+            super.setOnValueChangedListener(null)
+        } else {
+            this.listener = listener
+            super.setOnValueChangedListener{ picker, old, new ->
+                this.listener?.onValueChange(this, valueSet[old], valueSet[new])
+            }
+        }
+    }
 
     private fun setValues(keepValue: Boolean) {
         var value = 0
