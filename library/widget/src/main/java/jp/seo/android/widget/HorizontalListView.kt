@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+
 /**
  * @author Seo-4d696b75
- * @version 2021/01/09.
+ * @version 2018/10/31.
  */
 class HorizontalListView : RecyclerView {
 
@@ -64,7 +65,7 @@ class HorizontalListView : RecyclerView {
     ) : ViewHolder(view) {}
 
     abstract class ArrayAdapter<E>(
-        val list: List<E>
+        private val list: List<E>
     ) : Adapter<ViewHolder>() {
 
         private val views: MutableList<View> = ArrayList()

@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">MyLibrary</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="tab_text_1">Test 1</string>
+    <string name="tab_text_2">Test 2</string>
+    <string-array name="test_title">
+        <item>HorizontalListView</item>
+        <item>ExpandableTextView</item>
+        <item>none</item>
+    </string-array>
+    <string-array name="test_text">
+        <item>Sample Test</item>
+        <item>This is a sample text</item>
+        <item>This sample text is too long and not all the text is shown in the text view</item>
+    </string-array>
 </resources>
