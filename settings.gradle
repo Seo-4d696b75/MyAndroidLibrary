@@ -1,0 +1,3 @@
+include ':library:widget'
+include ':app'
+rootProject.name = "MyLibrary"
