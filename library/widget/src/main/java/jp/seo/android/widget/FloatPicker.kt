@@ -16,14 +16,12 @@ import kotlin.math.round
  */
 class FloatPicker : CustomNumberPicker {
 
-    interface OnFloatValueChangedListener {
-        fun onValueChange(picker: FloatPicker, oldValue: Float, newValue: Float)
+    constructor(context: Context) : super(context) {
+        init(context, null, 0)
     }
 
-    constructor(context: Context) : this(context, null) {
-    }
-
-    constructor(context: Context, set: AttributeSet?) : this(context, set, 0) {
+    constructor(context: Context, set: AttributeSet?) : super(context, set) {
+        init(context, set, 0)
     }
 
     constructor(context: Context, set: AttributeSet?, defaultAttr: Int) : super(
@@ -31,8 +29,12 @@ class FloatPicker : CustomNumberPicker {
         set,
         defaultAttr
     ) {
+        init(context, set, defaultAttr)
+    }
 
-        val array = context.obtainStyledAttributes(set, R.styleable.FloatPicker, 0, 0)
+    private fun init(context: Context, set: AttributeSet?, defaultAttr: Int) {
+
+        val array = context.obtainStyledAttributes(set, R.styleable.FloatPicker, defaultAttr, 0)
         max = array.getFloat(R.styleable.FloatPicker_maxFloat, 10f)
         min = array.getFloat(R.styleable.FloatPicker_minFloat, 0f)
         val step = array.getFloat(R.styleable.FloatPicker_stepFloat, 0.1f)
@@ -57,9 +59,10 @@ class FloatPicker : CustomNumberPicker {
             _listener = null
             super.setOnValueChangedListener(null)
         } else {
+            listener(this, valueFloat, valueFloat)
             _listener = listener
             super.setOnValueChangedListener { picker, old, new ->
-                _listener?.onValueChange(this, old * step, new * step)
+                _listener?.let { it(this, old * step, new * step) }
             }
         }
     }
@@ -117,7 +120,7 @@ class FloatPicker : CustomNumberPicker {
         get() = min
         set(min) {
             super.setMinValue(round(min / step).toInt())
-            this.min = super.getMinValue() * step
+            this.min = super.displayedMinValue * step
         }
 
     /**
@@ -131,7 +134,7 @@ class FloatPicker : CustomNumberPicker {
         get() = max
         set(max) {
             super.setMaxValue(round(max / step).toInt())
-            this.max = super.getMaxValue() * step
+            this.max = super.displayedMaxValue * step
         }
 
     /**
@@ -143,12 +146,12 @@ class FloatPicker : CustomNumberPicker {
      */
     var valueFloat: Float
         get() {
-            this.value = super.getValue() * step
+            this.value = super.displayedValue * step
             return this.value
         }
         set(value) {
             super.setValue(round(value / step).toInt())
-            this.value = super.getValue() * step
+            this.value = super.displayedValue * step
         }
 
     @Deprecated(
@@ -226,7 +229,7 @@ class FloatPicker : CustomNumberPicker {
         companion object {
             val CREATOR: Parcelable.Creator<SavedState?> =
                 object : Parcelable.Creator<SavedState?> {
-                    override fun createFromParcel(source: Parcel): SavedState? {
+                    override fun createFromParcel(source: Parcel): SavedState {
                         return SavedState(source)
                     }
 
@@ -237,7 +240,7 @@ class FloatPicker : CustomNumberPicker {
         }
     }
 
-    override fun onSaveInstanceState(): Parcelable? {
+    override fun onSaveInstanceState(): Parcelable {
         //setFreezesText(true);
         val superState = super.onSaveInstanceState()
         val state = SavedState(superState)
@@ -261,3 +264,6 @@ class FloatPicker : CustomNumberPicker {
 
 
 }
+
+typealias OnFloatValueChangedListener =
+            (picker: FloatPicker, oldValue: Float, newValue: Float) -> Unit

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="240dp"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="layout_width = match_parent" />
+
+    <jp.seo.android.widget.ExpandableTextView
+        android:id="@+id/text_test_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F0F0F0" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="layout_width = wrap_content" />
+
+    <jp.seo.android.widget.ExpandableTextView
+        android:id="@+id/text_test_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#F0F0F0" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="layout_width = wrap_content\nmaxWidth = 100dp" />
+
+    <jp.seo.android.widget.ExpandableTextView
+        android:id="@+id/text_test_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:maxWidth="100dp"
+        android:background="#F0F0F0" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="layout_width  = 100dp" />
+
+    <jp.seo.android.widget.ExpandableTextView
+        android:id="@+id/text_test_4"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:background="#F0F0F0" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="layout_width = 150dp \nminTextScaleX = 0.8" />
+
+    <jp.seo.android.widget.ExpandableTextView
+        android:id="@+id/text_test_5"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        custom:minTextScaleX="0.8"
+        android:background="#F0F0F0" />
+
+</LinearLayout>

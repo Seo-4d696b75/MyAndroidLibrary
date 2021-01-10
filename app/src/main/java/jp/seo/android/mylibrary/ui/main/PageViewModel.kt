@@ -37,7 +37,7 @@ class PageViewModel(
         _index.value = index
     }
 
-    private var _valueIndex = -1
+    private var _valueIndex = 0
 
     fun updateValue() {
         _valueIndex++
@@ -46,7 +46,7 @@ class PageViewModel(
         updateMessage("value changed: $v")
     }
 
-    private val _text = MutableLiveData<String>("")
+    private val _text = MutableLiveData<String>(textList[0])
     val text: LiveData<String> = _text
 
     fun updateMessage(mes: String) {

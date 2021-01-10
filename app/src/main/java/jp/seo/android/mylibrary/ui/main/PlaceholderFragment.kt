@@ -9,10 +9,11 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import jp.seo.android.mylibrary.R
+import jp.seo.android.widget.CustomNumberPicker
+import jp.seo.android.widget.FloatPicker
 import jp.seo.android.widget.HorizontalListView
 
 /**
@@ -38,9 +39,9 @@ class PlaceholderFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_test, container, false)
         val titleView: TextView = root.findViewById(R.id.text_title)
-        pageViewModel.title.observe(viewLifecycleOwner, Observer<String> {
+        pageViewModel.title.observe(viewLifecycleOwner) {
             titleView.text = it
-        })
+        }
         val messageView: TextView = root.findViewById(R.id.text_message)
         pageViewModel.message.observe(viewLifecycleOwner) {
             messageView.text = it
@@ -48,9 +49,7 @@ class PlaceholderFragment : Fragment() {
         val holder = root.findViewById<RelativeLayout>(R.id.widget_container)
         val index = arguments?.getInt(ARG_SECTION_NUMBER) ?: 0
         context?.let { ctx ->
-            getTestWidget(index, ctx)?.let { view ->
-                holder.addView(view)
-            }
+            getTestWidget(index, ctx, holder)
         }
 
         val fab: FloatingActionButton = root.findViewById(R.id.fab)
@@ -62,7 +61,11 @@ class PlaceholderFragment : Fragment() {
         return root
     }
 
-    private fun getTestWidget(index: Int, context: Context): View? {
+    /**
+     * return view(s) which should be tested here
+     */
+    private fun getTestWidget(index: Int, context: Context, parent: ViewGroup) {
+        val inflater = LayoutInflater.from(context)
         when (index) {
             0 -> {
                 val list = HorizontalListView(context)
@@ -71,14 +74,38 @@ class PlaceholderFragment : Fragment() {
                     pageViewModel.updateMessage("selected: $data")
                 }
                 list.adapter = adapter
-                return list
+                parent.addView(list)
             }
             1 -> {
+                val frame = inflater.inflate(R.layout.fragment_textview, parent, true)
+                val ids = listOf(
+                    R.id.text_test_1,
+                    R.id.text_test_2,
+                    R.id.text_test_3,
+                    R.id.text_test_4,
+                    R.id.text_test_5
+                )
+                val views = ids.map { frame.findViewById<TextView>(it) }
+                pageViewModel.text.observe(viewLifecycleOwner) { str ->
+                    views.forEach { it.text = str }
+                }
 
+            }
+            2 -> {
+                val frame = inflater.inflate(R.layout.fragment_picker, parent, true)
+                val number = frame.findViewById<CustomNumberPicker>(R.id.number_picker)
+                val float = frame.findViewById<FloatPicker>(R.id.float_picker)
+                val numberValue = frame.findViewById<TextView>(R.id.text_number_picker)
+                val floatValue = frame.findViewById<TextView>(R.id.text_float_picker)
+                number.setOnValueChangedListener { numberPicker, old, new ->
+                    numberValue.text = new.toString()
+                }
+                float.setOnValueChangedListener { picker, old, new ->
+                    floatValue.text = String.format("%.1f", new)
+                }
             }
             else -> Log.w("Index", "unknown: $index")
         }
-        return null
     }
 
     companion object {
@@ -102,7 +129,7 @@ class PlaceholderFragment : Fragment() {
         }
     }
 
-    class StringAdapter(private val context: Context, size: Int) :
+    class StringAdapter(context: Context, size: Int) :
         HorizontalListView.ArrayAdapter<String>(
             Array(size) { "Item-${it}" }.toList()
         ) {

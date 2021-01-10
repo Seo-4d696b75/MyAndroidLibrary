@@ -23,10 +23,12 @@ import kotlin.math.pow
  */
 open class CustomNumberPicker : NumberPicker {
 
-    constructor(context: Context) : this(context, null) {
+    constructor(context: Context) : super(context) {
+        init(context, null, 0)
     }
 
-    constructor(context: Context, set: AttributeSet?) : this(context, set, 0) {
+    constructor(context: Context, set: AttributeSet?) : super(context, set) {
+        init(context, set, 0)
     }
 
     constructor(context: Context, set: AttributeSet?, defaultAttr: Int) : super(
@@ -34,8 +36,13 @@ open class CustomNumberPicker : NumberPicker {
         set,
         defaultAttr
     ) {
+        init(context, set, defaultAttr)
+    }
 
-        val array = context.obtainStyledAttributes(set, R.styleable.CustomNumberPicker, 0, 0)
+    private fun init(context: Context, set: AttributeSet?, defaultAttr: Int) {
+
+        val array =
+            context.obtainStyledAttributes(set, R.styleable.CustomNumberPicker, defaultAttr, 0)
         min = array.getInteger(R.styleable.CustomNumberPicker_min, 0)
         max = array.getInteger(R.styleable.CustomNumberPicker_max, 100)
         step = array.getInteger(R.styleable.CustomNumberPicker_step, 10)
@@ -49,14 +56,13 @@ open class CustomNumberPicker : NumberPicker {
 
     }
 
-    private var min: Int
-    private var max: Int
-    private var step: Int
+    private var min: Int = 0
+    private var max: Int = 100
+    private var step: Int = 1
     private var valueSet: Array<Int> = arrayOf()
     private var speed: Float = 1.0f
     private var lastYPos: Float = 1.0f
-    private var _width: Int = 100
-    private var shiftPoint: Int
+    private var shiftPoint: Int = 1
     private var shiftRate: Float = 1.0f
     private var currentSpeed: Float = 0.0f
 
@@ -68,7 +74,8 @@ open class CustomNumberPicker : NumberPicker {
             super.setOnValueChangedListener(null)
         } else {
             this.listener = listener
-            super.setOnValueChangedListener{ picker, old, new ->
+            listener.onValueChange(this, displayedValue, displayedValue)
+            super.setOnValueChangedListener { picker, old, new ->
                 this.listener?.onValueChange(this, valueSet[old], valueSet[new])
             }
         }
@@ -77,7 +84,7 @@ open class CustomNumberPicker : NumberPicker {
     private fun setValues(keepValue: Boolean) {
         var value = 0
         if (keepValue) {
-            value = this.value
+            value = this.displayedValue
         }
         //最大最小の逆転を修正
         if (min > max) {
@@ -137,34 +144,100 @@ open class CustomNumberPicker : NumberPicker {
         return (v - min) / step
     }
 
+    @Deprecated(
+        "returned value is not the displayed value, but an index of current displayed value, use 'displayedValue' property instead",
+        ReplaceWith("displayedValue")
+    )
     override fun getValue(): Int {
-        val i = super.getValue()
-        return valueSet[i]
+        // implementation of super class depends on this method,
+        // DO NOT override this!
+        return super.getValue()
     }
 
     override fun setValue(value: Int) {
-        val i = getClosestIndex(value)
-        super.setValue(i)
+        // in super class, #setValueInternal used
+        displayedValue = value
     }
+
+    /**
+     * Viewが表示・選択している値
+     *
+     * ### `setter`
+     * [ステップ][stepValue]の倍数で最も近い値に調整される
+     */
+    var displayedValue: Int
+        get() {
+            val i = super.getValue()
+            return valueSet[i]
+        }
+        set(value) {
+            val i = getClosestIndex(value)
+            super.setValue(i)
+        }
 
     override fun setMinValue(minValue: Int) {
-        min = minValue
-        setValues(true)
+        displayedMinValue = minValue
     }
 
+    @Deprecated(
+        "returned value is always 0, use 'displayedMinValue' property instead",
+        ReplaceWith("displayedMinValue")
+    )
     override fun getMinValue(): Int {
-        return min
+        // implementation of super class depends on this method,
+        // DO NOT override this!
+        return super.getMinValue()
     }
+
+    /**
+     * Viewが表示・選択できる最小の値
+     *
+     * [NumberPicker]と異なり負数も許容する
+     *
+     * ### `setter`
+     * [ステップ][stepValue]の倍数で最も近い値に調整される
+     */
+    var displayedMinValue: Int
+        get() = min
+        set(value) {
+            min = value
+            setValues(true)
+        }
 
     override fun setMaxValue(maxValue: Int) {
-        max = maxValue
-        setValues(true)
+        displayedMaxValue = maxValue
     }
 
+
+    @Deprecated(
+        "returned value is max index of displayed values, use 'displayedMaxValue' property instead",
+        ReplaceWith("displayedMaxValue")
+    )
     override fun getMaxValue(): Int {
-        return max
+        // implementation of super class depends on this method,
+        // DO NOT override this!
+        return super.getMaxValue()
     }
 
+    /**
+     * Viewが表示・選択できる最大の値
+     *
+     * ### `setter`
+     * [ステップ][stepValue]の倍数で最も近い値に調整される
+     */
+    var displayedMaxValue: Int
+        get() = max
+        set(value) {
+            max = value
+            setValues(true)
+        }
+
+    /**
+     * Viewが表示・選択する値のステップ
+     *
+     * この値の倍数のみ表示・選択できるように制限する.
+     * 1以上の整数値
+     */
     var stepValue: Int
         get() = step
         set(value) {
@@ -172,6 +245,12 @@ open class CustomNumberPicker : NumberPicker {
             setValues(true)
         }
 
+    /**
+     * スクロール（wheel scroll）の速度を調整する
+     *
+     * `0`だと操作できないため、`abs(value) > 0.1`の条件を課す.
+     * 負数の場合はスクロール方向が逆になる
+     */
     var scrollSpeed: Float
         get() = speed
         set(value) {
@@ -202,7 +281,9 @@ open class CustomNumberPicker : NumberPicker {
         when (event?.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 lastYPos = event.y
-                val section = shiftPoint - 1 - (event.x * shiftPoint / _width).toInt()
+                val x = event.x
+                val width = super.getWidth()
+                val section = shiftPoint - 1 - (x * shiftPoint / width).toInt()
                 val index = shiftRate.pow(section)
                 currentSpeed = speed * index
             }
@@ -216,11 +297,6 @@ open class CustomNumberPicker : NumberPicker {
             }
         }
         return super.onTouchEvent(event)
-    }
-
-    override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
-        super.onWindowFocusChanged(hasWindowFocus)
-        _width = width
     }
 
 
@@ -265,7 +341,7 @@ open class CustomNumberPicker : NumberPicker {
         companion object {
             val CREATOR: Parcelable.Creator<SavedState?> =
                 object : Parcelable.Creator<SavedState?> {
-                    override fun createFromParcel(source: Parcel): SavedState? {
+                    override fun createFromParcel(source: Parcel): SavedState {
                         return SavedState(source)
                     }
 
@@ -279,9 +355,9 @@ open class CustomNumberPicker : NumberPicker {
     override fun onSaveInstanceState(): Parcelable? {
         val superState = super.onSaveInstanceState()
         val state = SavedState(superState)
-        state.min = minValue
-        state.max = maxValue
-        state.value = value
+        state.min = displayedMinValue
+        state.max = displayedMaxValue
+        state.value = displayedValue
         state.step = stepValue
         state.speed = scrollSpeed
         state.shiftPoint = shiftPoint
