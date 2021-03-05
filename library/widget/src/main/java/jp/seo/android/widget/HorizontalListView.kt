@@ -64,11 +64,24 @@ class HorizontalListView : RecyclerView {
         view: View
     ) : ViewHolder(view) {}
 
-    abstract class ArrayAdapter<E>(
-        private val list: List<E>
-    ) : Adapter<ViewHolder>() {
+    abstract class ArrayAdapter<E> : Adapter<ViewHolder> {
+
+        constructor() : super() {
+            list = listOf()
+        }
+
+        constructor(data: List<E>) : super() {
+            list = data
+        }
 
         private val views: MutableList<View> = ArrayList()
+        private var list: List<E>
+        var data: List<E>
+            get() = list
+            set(value) {
+                list = value
+                notifyDataSetChanged()
+            }
 
         /**
          * リストの要素のViewをインスタンス化する
