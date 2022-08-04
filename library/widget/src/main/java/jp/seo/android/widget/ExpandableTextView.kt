@@ -362,8 +362,9 @@ class ExpandableTextView : AppCompatTextView {
         }
 
         companion object {
+            @JvmField
             val CREATOR: Parcelable.Creator<SavedState?> = object : Parcelable.Creator<SavedState?> {
-                override fun createFromParcel(source: Parcel): SavedState? {
+                override fun createFromParcel(source: Parcel): SavedState {
                     return SavedState(source)
                 }
 
@@ -374,7 +375,7 @@ class ExpandableTextView : AppCompatTextView {
         }
     }
 
-    override fun onSaveInstanceState(): Parcelable? {
+    override fun onSaveInstanceState(): Parcelable {
         val superState = super.onSaveInstanceState()
         val state = SavedState(superState)
         state.mText = _currentText.toString()

@@ -339,6 +339,7 @@ open class CustomNumberPicker : NumberPicker {
         }
 
         companion object {
+            @JvmField
             val CREATOR: Parcelable.Creator<SavedState?> =
                 object : Parcelable.Creator<SavedState?> {
                     override fun createFromParcel(source: Parcel): SavedState {
