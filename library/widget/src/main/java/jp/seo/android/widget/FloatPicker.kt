@@ -74,14 +74,17 @@ class FloatPicker : CustomNumberPicker {
 
     override fun getDisplayedValues(length: Int): Array<String> {
         return if (initialized) {
-            val format = String.format("%%.%df", digits)
             Array(length) {
-                String.format(format, min + step * it)
+                (min + step * it).format
             }
         } else {
             super.getDisplayedValues(length)
         }
     }
+
+    // 小数点以下の桁数を調整して文字列表現に変換
+    private val Float.format: String
+        get() = String.format("%.${digits}f", value)
 
     /**
      * Viewが表示・選択できる数値のステップ（粒度）
