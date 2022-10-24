@@ -59,10 +59,9 @@ class FloatPicker : CustomNumberPicker {
             _listener = null
             super.setOnValueChangedListener(null)
         } else {
-            listener(this, valueFloat, valueFloat)
             _listener = listener
-            super.setOnValueChangedListener { picker, old, new ->
-                _listener?.let { it(this, old * step, new * step) }
+            super.setOnValueChangedListener { _, old, new ->
+                _listener?.invoke(this, old * step, new * step)
             }
         }
     }

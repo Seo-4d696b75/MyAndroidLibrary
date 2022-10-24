@@ -69,13 +69,12 @@ open class CustomNumberPicker : NumberPicker {
     private var listener: OnValueChangeListener? = null
 
     override fun setOnValueChangedListener(listener: OnValueChangeListener?) {
-        if ( listener == null ){
+        if (listener == null) {
             this.listener = null
             super.setOnValueChangedListener(null)
         } else {
             this.listener = listener
-            listener.onValueChange(this, displayedValue, displayedValue)
-            super.setOnValueChangedListener { picker, old, new ->
+            super.setOnValueChangedListener { _, old, new ->
                 this.listener?.onValueChange(this, valueSet[old], valueSet[new])
             }
         }
