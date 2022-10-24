@@ -196,9 +196,17 @@ class FloatPicker : CustomNumberPicker {
     }
 
 
-    internal class SavedState : BaseSavedState {
-        constructor(superState: Parcelable?) : super(superState) {}
-        private constructor(source: Parcel) : super(source) {
+    class SavedState : BaseSavedState {
+        constructor(superState: Parcelable?) : super(
+            superState
+        )
+
+        private constructor(source: Parcel) : super(
+            source,
+            // このクラスローダーはsuperState(CustomNumberPicker$SavedState)のforClassで使う
+            // 明示的に指定しないとClassNotFoundExceptionで落ちる場合あり
+            CustomNumberPicker::class.java.classLoader,
+        ) {
             min = source.readFloat()
             max = source.readFloat()
             value = source.readFloat()
