@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.AttributeSet
-import java.util.*
 import kotlin.math.absoluteValue
 import kotlin.math.log10
 import kotlin.math.pow
@@ -12,7 +11,7 @@ import kotlin.math.round
 
 /**
  * @author Seo-4d696b75
- * @version 2021/01/09.
+ * @version 2022/10/24.
  */
 class FloatPicker : CustomNumberPicker {
 
@@ -67,10 +66,11 @@ class FloatPicker : CustomNumberPicker {
     }
 
     @Deprecated(
-        "this listener will not expected values, use 'OnFloatValueChangedListener' instead.",
-        ReplaceWith("setOnValueChangedListener{ picker, oldValue, newValue -> }")
+        "this listener does now work, use 'OnFloatValueChangedListener' instead.",
+        ReplaceWith("setOnValueChangedListener { picker, oldValue, newValue -> }")
     )
-    override fun setOnValueChangedListener(listener: OnValueChangeListener?) {}
+    override fun setOnValueChangedListener(listener: OnValueChangeListener?) {
+    }
 
     override fun getDisplayedValues(length: Int): Array<String> {
         return if (initialized) {
@@ -220,6 +220,7 @@ class FloatPicker : CustomNumberPicker {
         var max = 0f
         var value = 0f
         var step = 0f
+
         override fun writeToParcel(out: Parcel, flags: Int) {
             super.writeToParcel(out, flags)
             out.writeFloat(min)
@@ -229,11 +230,8 @@ class FloatPicker : CustomNumberPicker {
         }
 
         override fun toString(): String {
-            return String.format(
-                Locale.US,
-                "FloatPicker.SavedState{%s value=%f, min=%f, max=%f, step=%f}",
-                Integer.toHexString(System.identityHashCode(this)), value, min, max, step
-            )
+            val id = Integer.toHexString(System.identityHashCode(this))
+            return "FloatPicker\$SavedState@$id(value=$value, min=$min, max=$max, step=$step)"
         }
 
         companion object {
@@ -272,8 +270,6 @@ class FloatPicker : CustomNumberPicker {
         stepFloat = myState.step
         requestLayout()
     }
-
-
 }
 
 typealias OnFloatValueChangedListener =

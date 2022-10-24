@@ -10,7 +10,6 @@ import android.widget.NumberPicker
 import androidx.annotation.CallSuper
 import java.lang.Integer.max
 import java.lang.Integer.min
-import java.util.*
 import kotlin.math.abs
 import kotlin.math.pow
 
@@ -19,7 +18,7 @@ import kotlin.math.pow
  * 負数まで拡張した整数全体を表示・選択できる[android.widget.NumberPicker]の拡張View
  *
  * @author Seo-4d696b75
- * @version 1.0 on 2017/10/15
+ * @version 2022/10/24
  */
 open class CustomNumberPicker : NumberPicker {
 
@@ -144,7 +143,7 @@ open class CustomNumberPicker : NumberPicker {
     }
 
     @Deprecated(
-        "returned value is not the displayed value, but an index of current displayed value, use 'displayedValue' property instead",
+        "returned value is not the displayed value, but an index of current displayed value, use 'displayedValue' instead",
         ReplaceWith("displayedValue")
     )
     override fun getValue(): Int {
@@ -179,7 +178,7 @@ open class CustomNumberPicker : NumberPicker {
     }
 
     @Deprecated(
-        "returned value is always 0, use 'displayedMinValue' property instead",
+        "returned value is always 0, use 'displayedMinValue' instead",
         ReplaceWith("displayedMinValue")
     )
     override fun getMinValue(): Int {
@@ -209,7 +208,7 @@ open class CustomNumberPicker : NumberPicker {
 
 
     @Deprecated(
-        "returned value is max index of displayed values, use 'displayedMaxValue' property instead",
+        "returned value is max index of displayed values, use 'displayedMaxValue' instead",
         ReplaceWith("displayedMaxValue")
     )
     override fun getMaxValue(): Int {
@@ -298,9 +297,8 @@ open class CustomNumberPicker : NumberPicker {
         return super.onTouchEvent(event)
     }
 
-
-    internal class SavedState : BaseSavedState {
-        constructor(superState: Parcelable?) : super(superState) {}
+    class SavedState : BaseSavedState {
+        constructor(superState: Parcelable?) : super(superState)
         private constructor(source: Parcel) : super(source) {
             min = source.readInt()
             max = source.readInt()
@@ -318,6 +316,7 @@ open class CustomNumberPicker : NumberPicker {
         var shiftPoint = 0
         var shiftRate = 0f
         var value = 0
+
         override fun writeToParcel(out: Parcel, flags: Int) {
             super.writeToParcel(out, flags)
             out.writeInt(min)
@@ -330,11 +329,8 @@ open class CustomNumberPicker : NumberPicker {
         }
 
         override fun toString(): String {
-            return String.format(
-                Locale.US,
-                "CustomNumberPicker.SavedState{%s value=%d, min=%d, max=%d, step=%d, speed=%f}",
-                Integer.toHexString(System.identityHashCode(this)), value, min, max, step, speed
-            )
+            val id = Integer.toHexString(System.identityHashCode(this))
+            return "CustomNumberPicker\$SavedState@$id(value=$value, min=$min, max=$max, step=$step, speed=$speed)"
         }
 
         companion object {
